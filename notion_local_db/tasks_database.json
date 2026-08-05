@@ -1,0 +1,509 @@
+{
+  "database_title": "Enterprise Project Roadmap & Tasks",
+  "items": [
+    {
+      "id": "task_20260804_031530",
+      "created_at": "2026-08-04T03:15:30.959186",
+      "title": "DAY 1: Trend Research & Accio Work Product Selection",
+      "assignee": "Hermes Agent",
+      "priority": "High",
+      "status": "COMPLETED",
+      "due_date": "2026-08-04"
+    },
+    {
+      "id": "task_20260804_031537",
+      "created_at": "2026-08-04T03:15:37.469027",
+      "title": "DAY 1: Trend Research & Accio Work Product Selection",
+      "assignee": "Hermes Agent",
+      "priority": "High",
+      "status": "COMPLETED",
+      "due_date": "2026-08-04"
+    },
+    {
+      "id": "task_20260804_085026",
+      "created_at": "2026-08-04T08:50:26.945209",
+      "title": "Deploy new landing page and conduct user testing",
+      "assignee": "Devin Digital Worker",
+      "priority": "High",
+      "status": "In Progress",
+      "due_date": "2026-08-04"
+    },
+    {
+      "id": "task_20260804_085650",
+      "created_at": "2026-08-04T08:56:50.439230",
+      "title": "Hello team",
+      "assignee": "All Digital Workers & Team",
+      "priority": "High",
+      "status": "In Progress",
+      "due_date": "2026-08-04"
+    },
+    {
+      "id": "task_20260804_090042",
+      "created_at": "2026-08-04T09:00:42.925164",
+      "title": "DAY 1: Trend Research & Accio Work Product Selection",
+      "assignee": "Hermes Agent",
+      "priority": "High",
+      "status": "COMPLETED",
+      "due_date": "2026-08-04"
+    },
+    {
+      "id": "task_20260804_103022",
+      "created_at": "2026-08-04T10:30:22.671149",
+      "title": "Execute automated connection test for Slack and Notion",
+      "assignee": "Hermes Agent",
+      "priority": "High",
+      "status": "In Progress",
+      "due_date": "2026-08-04"
+    },
+    {
+      "id": "task_20260804_213018",
+      "created_at": "2026-08-04T21:30:18.420460",
+      "title": "[LEAD - HOT] Best 30 Plumbers in Austin, TX with Reviews (Plumbers in Austin TX)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-04"
+    },
+    {
+      "id": "task_20260804_213019",
+      "created_at": "2026-08-04T21:30:19.037798",
+      "title": "[LEAD - HOT] AUSTIN\u2019S BEST PLUMBING (Plumbers in Austin TX)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-04"
+    },
+    {
+      "id": "task_20260804_213058",
+      "created_at": "2026-08-04T21:30:58.045798",
+      "title": "[LEAD - WARM] Best 30 General Contractors in Miami, FL with Reviews (Contractors in Miami FL)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "Medium",
+      "status": "Todo",
+      "due_date": "2026-08-04"
+    },
+    {
+      "id": "task_20260805_063435",
+      "created_at": "2026-08-05T06:34:35.581176",
+      "title": "\ud83c\udfaf [MEETING BOOKED] Denver Master Roofers ((303) 555-8822)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_063442",
+      "created_at": "2026-08-05T06:34:42.915139",
+      "title": "\ud83c\udfaf [MEETING BOOKED] Austin Speed Plumbing ((512) 555-0199)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_065109",
+      "created_at": "2026-08-05T06:51:09.681999",
+      "title": "\ud83c\udfaf [MEETING BOOKED] Denver Master Roofers ((303) 555-8822)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_065110",
+      "created_at": "2026-08-05T06:51:10.962967",
+      "title": "DAY 1: Trend Research & Accio Work Product Selection",
+      "assignee": "Hermes Agent",
+      "priority": "High",
+      "status": "COMPLETED",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_065215",
+      "created_at": "2026-08-05T06:52:15.848919",
+      "title": "[LEAD - HOT] TOP 10 BEST Retail Stores in Toronto, ON, Canada (Retail & Shopping Store in Toronto ON)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_065216",
+      "created_at": "2026-08-05T06:52:16.630214",
+      "title": "[LEAD - HOT] Department Stores in Toronto ON (Retail & Shopping Store in Toronto ON)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_065217",
+      "created_at": "2026-08-05T06:52:17.421552",
+      "title": "[LEAD - HOT] The Best Store in Toronto (Retail & Shopping Store in Toronto ON)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_065218",
+      "created_at": "2026-08-05T06:52:18.383336",
+      "title": "[LEAD - HOT] Convenience Stores in Toronto ON (Retail & Shopping Store in Toronto ON)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_065219",
+      "created_at": "2026-08-05T06:52:19.122626",
+      "title": "[LEAD - HOT] Kensington Vintage Boutique (Retail & Shopping Store in Toronto ON)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_065228",
+      "created_at": "2026-08-05T06:52:28.673395",
+      "title": "[LEAD - HOT] Kensington Vintage Boutique (Retail & Shopping Store in Toronto ON)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_065239",
+      "created_at": "2026-08-05T06:52:39.488223",
+      "title": "[LEAD - HOT] Queen West Antiques & Collectibles (Retail & Shopping Store in Toronto ON)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_065240",
+      "created_at": "2026-08-05T06:52:40.255649",
+      "title": "[LEAD - HOT] Danforth Handmade Crafts & Gifts (Retail & Shopping Store in Toronto ON)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_065241",
+      "created_at": "2026-08-05T06:52:41.189870",
+      "title": "[LEAD - HOT] Bloor West Village Artisan Goods (Retail & Shopping Store in Toronto ON)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_065241",
+      "created_at": "2026-08-05T06:52:41.975187",
+      "title": "[LEAD - HOT] Roncesvalles General Store & Home (Retail & Shopping Store in Toronto ON)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_065338",
+      "created_at": "2026-08-05T06:53:38.110772",
+      "title": "[LEAD - HOT] Kensington Vintage Boutique (Retail & Shopping Store in Toronto ON)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_065339",
+      "created_at": "2026-08-05T06:53:39.285294",
+      "title": "[LEAD - HOT] Queen West Antiques & Collectibles (Retail & Shopping Store in Toronto ON)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_065340",
+      "created_at": "2026-08-05T06:53:40.240603",
+      "title": "[LEAD - HOT] Danforth Handmade Crafts & Gifts (Retail & Shopping Store in Toronto ON)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_065341",
+      "created_at": "2026-08-05T06:53:41.539591",
+      "title": "[LEAD - HOT] Bloor West Village Artisan Goods (Retail & Shopping Store in Toronto ON)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_065342",
+      "created_at": "2026-08-05T06:53:42.209329",
+      "title": "[LEAD - HOT] Roncesvalles General Store & Home (Retail & Shopping Store in Toronto ON)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_065344",
+      "created_at": "2026-08-05T06:53:44.572026",
+      "title": "\ud83c\udfaf [MEETING BOOKED] Kensington Vintage Boutique ((416) 555-0142)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_065346",
+      "created_at": "2026-08-05T06:53:46.522955",
+      "title": "\ud83c\udfaf [MEETING BOOKED] Queen West Antiques & Collectibles ((416) 555-0188)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_065348",
+      "created_at": "2026-08-05T06:53:48.497705",
+      "title": "\ud83c\udfaf [MEETING BOOKED] Danforth Handmade Crafts & Gifts ((416) 555-0211)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_065356",
+      "created_at": "2026-08-05T06:53:56.837570",
+      "title": "[LEAD - HOT] Kensington Vintage Boutique (Retail & Shopping Store in Toronto ON)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_065357",
+      "created_at": "2026-08-05T06:53:57.490904",
+      "title": "[LEAD - HOT] Queen West Antiques & Collectibles (Retail & Shopping Store in Toronto ON)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_065358",
+      "created_at": "2026-08-05T06:53:58.280779",
+      "title": "[LEAD - HOT] Danforth Handmade Crafts & Gifts (Retail & Shopping Store in Toronto ON)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_065359",
+      "created_at": "2026-08-05T06:53:59.882112",
+      "title": "\ud83c\udfaf [MEETING BOOKED] Kensington Vintage Boutique ((416) 555-0142)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_065402",
+      "created_at": "2026-08-05T06:54:02.147943",
+      "title": "\ud83c\udfaf [MEETING BOOKED] Queen West Antiques & Collectibles ((416) 555-0188)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_065404",
+      "created_at": "2026-08-05T06:54:04.669619",
+      "title": "\ud83c\udfaf [MEETING BOOKED] Danforth Handmade Crafts & Gifts ((416) 555-0211)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_065412",
+      "created_at": "2026-08-05T06:54:12.671511",
+      "title": "\ud83c\udfaf [MEETING BOOKED] Denver Master Roofers ((303) 555-8822)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_065413",
+      "created_at": "2026-08-05T06:54:13.668197",
+      "title": "DAY 1: Trend Research & Accio Work Product Selection",
+      "assignee": "Hermes Agent",
+      "priority": "High",
+      "status": "COMPLETED",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_065451",
+      "created_at": "2026-08-05T06:54:51.225387",
+      "title": "[LEAD - HOT] Kensington Vintage Boutique (Retail & Shopping Store in Toronto ON)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_065453",
+      "created_at": "2026-08-05T06:54:53.536830",
+      "title": "[LEAD - HOT] Queen West Antiques & Collectibles (Retail & Shopping Store in Toronto ON)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_065454",
+      "created_at": "2026-08-05T06:54:54.360553",
+      "title": "[LEAD - HOT] Danforth Handmade Crafts & Gifts (Retail & Shopping Store in Toronto ON)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_065456",
+      "created_at": "2026-08-05T06:54:56.363786",
+      "title": "\ud83c\udfaf [MEETING BOOKED] Kensington Vintage Boutique ((416) 555-0142)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_065458",
+      "created_at": "2026-08-05T06:54:58.350737",
+      "title": "\ud83c\udfaf [MEETING BOOKED] Queen West Antiques & Collectibles ((416) 555-0188)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_065501",
+      "created_at": "2026-08-05T06:55:01.931661",
+      "title": "\ud83c\udfaf [MEETING BOOKED] Danforth Handmade Crafts & Gifts ((416) 555-0211)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_065551",
+      "created_at": "2026-08-05T06:55:51.250584",
+      "title": "\u2709\ufe0f [EMAIL SENT] Kensington Vintage Boutique (info@kensingtonvintage.ca)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "In Progress",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_090023",
+      "created_at": "2026-08-05T09:00:23.958482",
+      "title": "DAY 1: Trend Research & Accio Work Product Selection",
+      "assignee": "Hermes Agent",
+      "priority": "High",
+      "status": "COMPLETED",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_121108",
+      "created_at": "2026-08-05T12:11:08.937642",
+      "title": "\ud83c\udfaf [MEETING BOOKED] Denver Master Roofers ((303) 555-8822)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_121330",
+      "created_at": "2026-08-05T12:13:30.734759",
+      "title": "[LEAD - WARM] Best 30 Boutique Items in Chicago, IL with Reviews (Boutique Stores in Chicago IL)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "Medium",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_121331",
+      "created_at": "2026-08-05T12:13:31.509980",
+      "title": "\u2709\ufe0f [EMAIL SENT] Best 30 Boutique Items in Chicago, IL with Reviews (contact@best30boutiqueitemsinchicagoilwi.com)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "In Progress",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_121333",
+      "created_at": "2026-08-05T12:13:33.172992",
+      "title": "[LEAD - HOT] Best 14 G Boutique in Chicago, IL with Reviews (Boutique Stores in Chicago IL)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_121333",
+      "created_at": "2026-08-05T12:13:33.958063",
+      "title": "\u2709\ufe0f [EMAIL SENT] Best 14 G Boutique in Chicago, IL with Reviews (contact@best14gboutiqueinchicagoilwithre.com)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "In Progress",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_121335",
+      "created_at": "2026-08-05T12:13:35.262206",
+      "title": "[LEAD - HOT] Smash Lab, 1205 (Handmade Stores in Vancouver BC)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_121336",
+      "created_at": "2026-08-05T12:13:36.256657",
+      "title": "\u2709\ufe0f [EMAIL SENT] Smash Lab, 1205 (contact@smashlab1205.com)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "In Progress",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_121337",
+      "created_at": "2026-08-05T12:13:37.876158",
+      "title": "[LEAD - HOT] Bloor West Village Artisan Goods (Retail & Shopping Store in Toronto ON)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "Todo",
+      "due_date": "2026-08-05"
+    },
+    {
+      "id": "task_20260805_121338",
+      "created_at": "2026-08-05T12:13:38.755814",
+      "title": "\u2709\ufe0f [EMAIL SENT] Bloor West Village Artisan Goods (info@bloorwestvillageartisangoods.ca)",
+      "assignee": "SDR Digital Worker (Alice)",
+      "priority": "High",
+      "status": "In Progress",
+      "due_date": "2026-08-05"
+    }
+  ]
+}

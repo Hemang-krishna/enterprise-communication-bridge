@@ -1,0 +1,13 @@
+{
+  "database_title": "Enterprise Documentation & Knowledge Base",
+  "items": [
+    {
+      "id": "doc_20260804_085650",
+      "created_at": "2026-08-04T08:56:50.439733",
+      "title": "Greeting from Project Lead",
+      "category": "Team Announcement",
+      "author": "Dxrk sky (project.anyaforger@gmail.com)",
+      "content": "Hello team! Welcome to Project Anya Enterprise Workspace."
+    }
+  ]
+}

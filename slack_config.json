@@ -1,0 +1,19 @@
+{
+  "workspace_owner_email": "project.anyaforger@gmail.com",
+  "workspace_name": "Project Anya Slack Enterprise Workspace",
+  "status": "CONFIGURED",
+  "linked_account": "project.anyaforger@gmail.com",
+  "default_channels": [
+    "#general",
+    "#sourcing-alerts",
+    "#orders",
+    "#dev-builds",
+    "#leads-disqualified"
+  ],
+  "bot_name": "Hermes Enterprise AI Agent",
+  "integrations": {
+    "notion_bridge": "CONNECTED",
+    "schedule_planner": "ACTIVE",
+    "webhook_status": "READY"
+  }
+}

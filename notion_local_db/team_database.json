@@ -1,0 +1,32 @@
+{
+  "database_title": "Enterprise Team Directory",
+  "workspace_owner": "project.anyaforger@gmail.com",
+  "members": [
+    {
+      "name": "Project Lead (Dxrk sky)",
+      "email": "project.anyaforger@gmail.com",
+      "role": "Workspace Owner / Main Director",
+      "status": "ACTIVE"
+    },
+    {
+      "name": "Hermes AI Agent",
+      "role": "Chief Operating & Technical Agent",
+      "status": "ACTIVE"
+    },
+    {
+      "name": "SDR Digital Worker (Alice)",
+      "role": "Lead Generation & Outreach",
+      "status": "ACTIVE"
+    },
+    {
+      "name": "Sierra Digital Worker",
+      "role": "Customer Support & Action Engine",
+      "status": "ACTIVE"
+    },
+    {
+      "name": "Devin Digital Worker",
+      "role": "Autonomous Software Engineer",
+      "status": "ACTIVE"
+    }
+  ]
+}
