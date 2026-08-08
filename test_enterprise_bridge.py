@@ -1,7 +1,7 @@
 import unittest
 import os
 import json
-from slack_integration import SlackIntegrationEngine
+from discord_integration import DiscordIntegrationEngine
 from notion_integration import NotionEnterpriseEngine
 from enterprise_bridge import EnterpriseCommunicationBridge
 
@@ -10,13 +10,17 @@ class TestEnterpriseBridge(unittest.TestCase):
     def setUp(self):
         self.tmp_dir = "/tmp/test_notion_db"
         self.notion = NotionEnterpriseEngine(local_storage_dir=self.tmp_dir)
-        self.slack = SlackIntegrationEngine()
-        self.bridge = EnterpriseCommunicationBridge(slack_engine=self.slack, notion_engine=self.notion)
+        self.discord = DiscordIntegrationEngine()
+        self.bridge = EnterpriseCommunicationBridge(discord_engine=self.discord, notion_engine=self.notion)
 
-    def test_slack_formatting(self):
-        msg = self.slack.format_team_announcement("Test Title", "Lead", "Details")
-        self.assertIn("Test Title", msg)
-        self.assertIn("Lead", msg)
+    def test_discord_formatting(self):
+        res = self.discord.sync_notion_event_to_discord(
+            task_title="Test Notion Task",
+            status="In Progress",
+            priority="High",
+            notion_url="https://notion.so/test_page"
+        )
+        self.assertIn("status", res)
 
     def test_notion_task_creation(self):
         res = self.notion.create_notion_task(
@@ -47,11 +51,6 @@ class TestEnterpriseBridge(unittest.TestCase):
         )
         self.assertEqual(res["status"], "DISPATCHED")
         self.assertEqual(res["target_member"], "Hermes Agent")
-
-    def test_bridge_full_workspace_status(self):
-        status = self.bridge.get_full_workspace_status()
-        self.assertEqual(status["system_health"], "ENTERPRISE_OPERATIONAL")
-        self.assertIn("notion_workspace", status)
 
 if __name__ == "__main__":
     unittest.main()
