@@ -114,8 +114,8 @@ def log_team_chat_message(author: str, content: str, channel: str):
 @bot.event
 async def on_ready():
     logging.info(f"⚡ [Snorlax Bot Online] Authenticated as {bot.user} (ID: {bot.user.id})")
-    print(f"✅ Snorlax Autonomous Bot Online 24/7! Visual n8n Flow Architect Active.")
-    await bot.change_presence(activity=discord.Game(name="24/7 Visual n8n AI Flow Architect"))
+    print(f"✅ Snorlax Autonomous Bot Online 24/7! Personal Agentic UI & 5-Year-Old Explanation Engine Active.")
+    await bot.change_presence(activity=discord.Game(name="24/7 Personal Snorlax AI UI & Web Search"))
 
 @bot.event
 async def on_message(message):
@@ -143,27 +143,37 @@ async def on_message(message):
             await message.channel.send(greeting_msg)
             return
 
-        # Case 2: Status Command
-        elif query_clean.lower() == "status":
+        # Case 2: Personal UI / App Link Request
+        elif query_clean.lower() in ["ui", "app", "interface", "portal", "website"]:
             embed = discord.Embed(
-                title=f"{random.choice(CUTE_EMOJIS)} Snorlax System Status",
-                description="**Status:** 100% Operational (24/7)\n**n8n AI Flow Architect:** ACTIVE\n**Starter Kit Repo:** Synced (*Hemang-krishna/self-hosted-ai-starter-kit*)",
-                color=0x2563eb
+                title=f"🌸✨ Snorlax Personal AI Operating Interface",
+                description=(
+                    f"Hii **{message.author.mention}** ☕!\n\n"
+                    f"Here is your **Personal Snorlax Agentic User Interface** created from scratch:\n\n"
+                    f"👉 **[Launch Snorlax Personal AI Interface](https://anya-agentic-space.loca.lt/static/snorlax_personal_ui.html)**\n\n"
+                    f"✨ **Features Inside:**\n"
+                    f"• Live Interactive Chat Console\n"
+                    f"• Visual n8n AI Flow Architect Canvas\n"
+                    f"• Super-Easy 5-Year-Old Explanation Center\n"
+                    f"• Real-Time Team Leadership Directory"
+                ),
+                color=0x8b5cf6
             )
             await message.channel.send(embed=embed)
             return
 
-        # Case 3: Questions & AI Automations (DEFINITION FIRST + VISUAL n8n FLOW ARCHITECT + SOURCES LATER)
+        # Case 3: Questions & AI Automations (PATIENT 5-YEAR-OLD EXPLANATION FIRST + VISUAL n8n FLOW + UI LINK + SOURCES LATER)
         else:
             async with message.channel.typing():
                 web_results = perform_bulletproof_web_search(query_clean, limit=3)
 
             cute_icon = random.choice(CUTE_EMOJIS)
             
-            # DEFINITION & EXPLANATION FIRST
-            definition_text = (
-                f"An **AI Automation** is an autonomous digital pipeline that combines **Large Language Models (LLMs)** with deterministic workflow nodes (n8n, webhooks, databases, and APIs).\n\n"
-                f"Unlike static rule-based scripts, AI Automations read unstructured data, reason through complex decisions, query vector databases (Qdrant RAG), and execute actions (voice calls, emails, git commits) automatically without human intervention."
+            # PATIENT 5-YEAR-OLD EXPLANATION FIRST
+            easy_definition = (
+                f"🌸 **Imagine a Magical Robot Helper!**\n"
+                f"Normally, when you want to look something up, write an email, or make a phone call, you have to do every single button click yourself.\n\n"
+                f"An **AI Automation** is like giving your magical helper (Snorlax 😴) a list of recipes. Snorlax reads the request, thinks using its AI brain 🧠, looks up reference books 📚, and does all the work for you automatically in seconds!"
             )
 
             # VISUAL n8n FLOW ARCHITECT DIAGRAM
@@ -184,8 +194,13 @@ async def on_message(message):
             )
 
             embed = discord.Embed(
-                title=f"{cute_icon} {user_display}'s AI Automation & Visual Flow Architect Answer",
-                description=f"Hey **{message.author.mention}** {cute_icon}!\n\n### 🧠 What is an AI Automation?\n{definition_text}\n\n### 🔌 Visual n8n Flow Architect Diagram\n{visual_flow_diagram}\n👉 **[Open Interactive n8n Canvas Web App](https://anya-agentic-space.loca.lt/static/n8n_ai_flow_architect.html)**",
+                title=f"{cute_icon} {user_display}'s AI Automation Explanation & Visual Flow",
+                description=(
+                    f"Hey **{message.author.mention}** {cute_icon}!\n\n"
+                    f"### 🧠 What is an AI Automation? (Super Easy Explanation)\n{easy_definition}\n\n"
+                    f"### 🔌 Visual n8n Flow Architect Diagram\n{visual_flow_diagram}\n"
+                    f"👉 **[Launch Personal Snorlax AI User Interface](https://anya-agentic-space.loca.lt/static/snorlax_personal_ui.html)**"
+                ),
                 color=0x10b981
             )
 
@@ -201,7 +216,7 @@ async def on_message(message):
                     inline=False
                 )
 
-            embed.set_footer(text=f"Project Snorlax • n8n Flow Architect Active 24/7 {random.choice(CUTE_EMOJIS)}")
+            embed.set_footer(text=f"Project Snorlax • Personal AI Interface Active 24/7 {random.choice(CUTE_EMOJIS)}")
             await message.channel.send(embed=embed)
 
     await bot.process_commands(message)
@@ -211,5 +226,5 @@ if __name__ == "__main__":
         print("Error: DISCORD_BOT_TOKEN not found.")
         sys.exit(1)
     
-    print("Starting 24/7 Snorlax Bot with Visual n8n Flow Architect & AI Automation Definition Engine...")
+    print("Starting 24/7 Snorlax Bot with Personal AI Interface & Patient 5-Year-Old Explanation Engine...")
     bot.run(BOT_TOKEN)
