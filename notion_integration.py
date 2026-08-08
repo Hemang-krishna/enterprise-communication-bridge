@@ -176,6 +176,23 @@ class NotionEnterpriseEngine:
 
         return {"success": True, "notion_doc": doc}
 
+    def add_team_member(self, name: str, role: str, email: str, discord_id: Optional[str] = None) -> Dict[str, Any]:
+        """Adds a new team member to the Notion Team Database."""
+        member = {
+            "id": f"team_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
+            "name": name,
+            "role": role,
+            "email": email,
+            "discord_id": discord_id or "",
+            "joined_at": datetime.now().isoformat()
+        }
+        with open(self.team_file, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        data["items"].append(member)
+        with open(self.team_file, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=2)
+        return {"success": True, "team_member": member}
+
     def get_workspace_overview(self) -> Dict[str, Any]:
         """Returns complete overview of tasks, documentation, and team directory."""
         with open(self.tasks_file, "r", encoding="utf-8") as f:

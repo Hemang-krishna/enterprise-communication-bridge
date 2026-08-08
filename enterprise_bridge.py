@@ -96,6 +96,21 @@ class EnterpriseCommunicationBridge:
             "discord_delivery": discord_res
         }
 
+    def add_team_member(self, name: str, role: str, email: str, discord_id: Optional[str] = None) -> Dict[str, Any]:
+        """Adds a team member to Notion and sends a welcome alert embed to Discord."""
+        notion_res = self.notion.add_team_member(name=name, role=role, email=email, discord_id=discord_id)
+        
+        embed_title = f"👤 New Team Member Added: {name}"
+        desc = f"**Name:** {name}\n**Role:** `{role}`\n**Email:** `{email}`\n**Notion Team Record:** Logged in 'Anya's Space'"
+        fields = [
+            {"name": "Name", "value": name, "inline": True},
+            {"name": "Role", "value": role, "inline": True},
+            {"name": "Email", "value": email, "inline": True}
+        ]
+        
+        discord_res = self.discord.post_webhook_embed(title=embed_title, description=desc, fields=fields, color=0x8b5cf6)
+        return {"status": "MEMBER_ADDED", "notion_record": notion_res, "discord_delivery": discord_res}
+
     def get_full_workspace_status(self) -> Dict[str, Any]:
         """Returns unified status across Discord and Notion platforms."""
         notion_overview = self.notion.get_workspace_overview()
