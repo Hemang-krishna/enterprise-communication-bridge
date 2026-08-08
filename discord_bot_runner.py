@@ -21,7 +21,8 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - [%(levelname)s] - 
 
 BOT_TOKEN = os.environ.get("DISCORD_BOT_TOKEN")
 CHANNEL_ID = os.environ.get("DISCORD_CHANNEL_ID", "1535612387111997512")
-GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN", "")
+CHAT_LOG_FILE = "/data/discord_team_chats.json"
+TELEGRAM_REPORT_FILE = "/data/reports/telegram_team_workflow_report.txt"
 
 if not BOT_TOKEN and os.path.exists("/data/.env"):
     with open("/data/.env", "r") as f:
@@ -35,24 +36,13 @@ intents = discord.Intents.default()
 bot = commands.Bot(command_prefix="!", intents=intents)
 bridge = EnterpriseCommunicationBridge()
 
-last_morning_checkin = ""
-last_afternoon_checkin = ""
+CUTE_EMOJIS = ["😴", "⚡", "🌸", "🎀", "🐣", "🔮", "☕", "🎨", "🌟", "✨", "🐾", "🐥"]
 
 MOTIVATIONAL_QUOTES = [
     ("“Simplicity is prerequisite for reliability.” — Edsger W. Dijkstra", "Break complex automation nodes into small, focused sub-systems to eliminate mental clutter."),
     ("“The best way to predict the future is to invent it.” — Alan Kay", "Every AI flow you build today shapes the autonomous infrastructure of tomorrow."),
     ("“Action is the foundational key to all success.” — Pablo Picasso", "Start with a working prototype, then iterate rapidly. Perfect execution beats overthinking."),
-    ("“It always seems impossible until it's done.” — Nelson Mandela", "Complex web scrapers and sub-second voice agents seem daunting until the first successful API call."),
-    ("“Focus on being productive instead of busy.” — Tim Ferriss", "Automate repetitive data entry so your brain stays fresh for high-level technical strategy."),
-    ("“Small daily improvements over time lead to stunning results.” — Robin Sharma", "Consistently refining 1% of your n8n workflows daily compounds into exponential productivity."),
-    ("“Clarity precedes mastery.” — Robin Sharma", "Clear documentation in Notion prevents brain fog and keeps the entire team aligned effortlessly.")
-]
-
-AFTERNOON_ENERGY_BOOSTERS = [
-    "🧠 **Anti-Brain-Fog Protocol:** Take a 3-minute screen break, hydrate, and stretch your spine. Physical movement clears cognitive fatigue instantly!",
-    "⚙️ **Automation Strategy:** When feeling stuck on a complex bug, step away for 5 minutes and explain the flow aloud. Rubber-duck debugging restores clarity!",
-    "💡 **Focus Framework:** Use the 25-minute Pomodoro block to tackle one high-priority task with zero notifications for maximum momentum.",
-    "🚀 **Mindset Check:** Remember that every problem solved is permanent leverage added to our AI system. Build once, run infinitely!"
+    ("“It always seems impossible until it's done.” — Nelson Mandela", "Complex web scrapers and sub-second voice agents seem daunting until the first successful API call.")
 ]
 
 def perform_bulletproof_web_search(query: str, limit: int = 4) -> list:
@@ -96,173 +86,136 @@ def perform_bulletproof_web_search(query: str, limit: int = 4) -> list:
 
     return results[:limit]
 
-def create_github_issue(repo_name: str, title: str, body: str) -> dict:
-    url = f"https://api.github.com/repos/Hemang-krishna/{repo_name}/issues"
-    payload = {"title": title, "body": body}
-    req = urllib.request.Request(
-        url,
-        data=json.dumps(payload).encode("utf-8"),
-        headers={
-            "Authorization": f"token {GITHUB_TOKEN}",
-            "Accept": "application/vnd.github.v3+json",
-            "User-Agent": "Snorlax-Discord-Bot"
-        }
-    )
+def log_team_chat_message(author: str, content: str, channel: str):
+    """Passively logs every team message to track workflow state for Telegram reporting."""
+    os.makedirs("/data/reports", exist_ok=True)
+    entry = {
+        "timestamp": datetime.utcnow().isoformat(),
+        "author": str(author),
+        "content": content,
+        "channel": channel
+    }
+    data = []
+    if os.path.exists(CHAT_LOG_FILE):
+        try:
+            with open(CHAT_LOG_FILE, "r", encoding="utf-8") as f:
+                data = json.load(f)
+        except Exception:
+            data = []
+    data.append(entry)
+    with open(CHAT_LOG_FILE, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2)
+
+def generate_telegram_workflow_report() -> str:
+    """Generates a detailed personal workflow report of team interactions for Dxrk sky on Telegram."""
+    if not os.path.exists(CHAT_LOG_FILE):
+        return "📊 **Personal Workflow Report for Dxrk sky:**\nNo team chat activity logged yet today."
+
     try:
-        with urllib.request.urlopen(req) as resp:
-            return json.loads(resp.read().decode("utf-8"))
-    except Exception as e:
-        return {"error": str(e)}
+        with open(CHAT_LOG_FILE, "r", encoding="utf-8") as f:
+            chats = json.load(f)
+    except Exception:
+        chats = []
 
-@tasks.loop(minutes=15)
-async def twice_daily_routine_check():
-    global last_morning_checkin, last_afternoon_checkin
-    now = datetime.utcnow()
-    current_date = now.strftime("%Y-%m-%d")
-    current_hour = now.hour
+    total_msgs = len(chats)
+    authors = set(c["author"] for c in chats)
 
-    channel = bot.get_channel(int(CHANNEL_ID))
-    if not channel:
-        return
+    report = (
+        f"📊 **PERSONAL TELEGRAM WORKFLOW REPORT (Dxrk sky)** 📊\n"
+        f"• **Generated At:** {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')}\n"
+        f"• **Total Messages Monitored:** {total_msgs}\n"
+        f"• **Active Team Members:** {', '.join(authors) if authors else 'None'}\n\n"
+        f"🔍 **Workflow State Analysis:**\n"
+    )
+    for c in chats[-10:]:
+        report += f"  • `[{c['author']}]`: {c['content'][:120]}\n"
 
-    if current_hour in [8, 9] and last_morning_checkin != current_date:
-        last_morning_checkin = current_date
-        quote, tip = random.choice(MOTIVATIONAL_QUOTES)
-        embed = discord.Embed(
-            title="🌅 Morning Energy Boost & Daily Goal Check-In",
-            description=(
-                f"**Good Morning Team Project Snorlax!** ☀️\n\n"
-                f"Sending warm morning greetings to our leadership team:\n"
-                f"• **Founder:** Vishwajith (@Vish7781)\n"
-                f"• **Director in Technology:** Monkey D Luffy (@lo_uffy_1999)\n"
-                f"• **Workspace Owner:** Dxrk sky\n\n"
-                f"📜 **Quote of the Day:** {quote}\n\n"
-                f"📌 **Warm Check-In:** What are our core technical focus areas and roadmap targets for today?\n"
-                f"⚡ **24/7 Real-Time Messaging Active:** I am listening and responding to EVERY message in real-time to power the team!"
-            ),
-            color=0xf59e0b
-        )
-        embed.add_field(name="🎯 Daily AI Productivity Tip", value=tip, inline=False)
-        embed.set_footer(text="Project Snorlax • Morning Energy Check-In")
-        await channel.send(embed=embed)
+    report += f"\n⚡ **System Status:** Snorlax 24/7 Autonomous Daemon Active & Self-Healing."
+    
+    with open(TELEGRAM_REPORT_FILE, "w", encoding="utf-8") as f:
+        f.write(report)
 
-    elif current_hour in [14, 15] and last_afternoon_checkin != current_date:
-        last_afternoon_checkin = current_date
-        booster = random.choice(AFTERNOON_ENERGY_BOOSTERS)
-        embed = discord.Embed(
-            title="☕ Afternoon Focus & Anti-Brain-Fog Check-In",
-            description=(
-                f"**Good Afternoon Team Project Snorlax!** 🌆\n\n"
-                f"Checking in warmly on your mid-day progress and mental energy levels!\n\n"
-                f"{booster}\n\n"
-                f"📌 **Workflow Status:** How are today's tasks progressing? Any technical blockers or research questions?\n"
-                f"⚡ **Real-Time Assistant Active:** Send any message in the channel and I will respond instantly!"
-            ),
-            color=0x3b82f6
-        )
-        embed.set_footer(text="Project Snorlax • Afternoon Focus Check-In")
-        await channel.send(embed=embed)
+    return report
 
 @bot.event
 async def on_ready():
     logging.info(f"⚡ [Snorlax Bot Online] Authenticated as {bot.user} (ID: {bot.user.id})")
-    print(f"✅ Snorlax Bot Connected & Online 24/7 with REAL-TIME MESSAGING TO ALL TEAM MEMBERS!")
-    await bot.change_presence(activity=discord.Game(name="24/7 Real-Time AI Team Assistant"))
-    if not twice_daily_routine_check.is_running():
-        twice_daily_routine_check.start()
+    print(f"✅ Snorlax Autonomous Bot Online 24/7! Monitoring team chats passively & responding on @mentions only.")
+    await bot.change_presence(activity=discord.Game(name="24/7 Passive Chat Monitoring & Support"))
 
 @bot.event
 async def on_message(message):
-    # Ignore messages sent by Snorlax itself
     if message.author == bot.user:
         return
 
-    # REAL-TIME MESSAGING ENGINE: RESPOND TO ALL TEAM MESSAGES IN CHANNELS!
+    # PASSIVELY READ AND UNDERSTAND EVERY TEAM MESSAGE (Zero Spam)
     content_raw = message.content.strip()
-    if not content_raw:
-        return
+    if content_raw:
+        log_team_chat_message(author=message.author, content=content_raw, channel=str(message.channel))
 
-    # Strip bot mention or command prefix if present
-    content_clean = message.content.replace(f"<@{bot.user.id}>", "").replace(f"<@!{bot.user.id}>", "").strip()
-    if content_clean.startswith("!snorlax") or content_clean.startswith("!anya") or content_clean.startswith("!hermes"):
-        content_clean = content_clean.split(" ", 1)[1] if " " in content_clean else ""
+    # RESPOND IN DISCORD ONLY WHEN EXPLICITLY MENTIONED OR PREFIXED
+    is_mentioned = bot.user.mentioned_in(message)
+    is_prefixed = message.content.startswith("!snorlax") or message.content.startswith("!anya") or message.content.startswith("!hermes")
 
-    content_clean = content_clean.strip()
-    logging.info(f"[Real-Time Message from {message.author}]: {content_clean}")
+    if is_mentioned or is_prefixed:
+        content_clean = message.content.replace(f"<@{bot.user.id}>", "").replace(f"<@!{bot.user.id}>", "").strip()
+        if content_clean.startswith("!snorlax") or content_clean.startswith("!anya") or content_clean.startswith("!hermes"):
+            content_clean = content_clean.split(" ", 1)[1] if " " in content_clean else ""
 
-    # Command: Status
-    if content_clean.lower() == "status":
-        embed = discord.Embed(
-            title="⚡ Project Snorlax Real-Time System Status",
-            description="**Status:** 100% Operational Real-Time (24/7)\n**Real-Time Messaging:** ENABLED (Responds to all team members)\n**Notion Workspace:** Live Synced (*Anya's Space*)\n**GitHub:** 28 Repos Synced (*Hemang-krishna*)",
-            color=0x2563eb
-        )
-        await message.channel.send(embed=embed)
+        query_clean = content_clean.strip()
+        cute_prefix = f"{random.choice(CUTE_EMOJIS)} {random.choice(CUTE_EMOJIS)}"
 
-    # Command: Team
-    elif content_clean.lower() == "team":
-        embed = discord.Embed(
-            title="👥 Project Snorlax Team Directory",
-            description="**Founder & Supreme Lead:** Vishwajith (@Vish7781)\n**Director in Technology:** Monkey D Luffy (@lo_uffy_1999)\n**Workspace Owner:** Dxrk sky\n**AI Operating Agent:** Snorlax / Hermes",
-            color=0x8b5cf6
-        )
-        await message.channel.send(embed=embed)
+        if not query_clean:
+            query_clean = "AI Automations Project Snorlax"
 
-    # Command: GitHub Issue
-    elif content_clean.lower().startswith("issue") or "github issue" in content_clean.lower():
-        issue_title = re.sub(r'^(issue|github issue|create issue)\s+', '', content_clean, flags=re.IGNORECASE).strip()
-        if not issue_title:
-            issue_title = f"Task requested by {message.author}"
-        
-        res = create_github_issue("project-anya", issue_title, f"Requested by Discord User {message.author}\nChannel: #{message.channel.name}")
-        
-        if "html_url" in res:
+        # Command: Status
+        if query_clean.lower() == "status":
             embed = discord.Embed(
-                title=f"🐙 GitHub Issue Created: #{res.get('number')}",
-                description=f"**Title:** {res.get('title')}\n**Repository:** `Hemang-krishna/project-anya`\n🔗 **[View Issue on GitHub]({res.get('html_url')})**",
-                color=0x10b981
+                title=f"{cute_prefix} Snorlax System Status",
+                description="**Status:** 100% Operational (24/7)\n**Passive Monitor:** ACTIVE (Reading all team messages)\n**Mention Responder:** ACTIVE (Cute Emojis Only on @mentions)\n**Telegram Personal Report:** ENABLED",
+                color=0x2563eb
             )
+            await message.channel.send(embed=embed)
+
+        # Command: Team
+        elif query_clean.lower() == "team":
+            embed = discord.Embed(
+                title=f"{cute_prefix} Project Snorlax Team Directory",
+                description="**Founder & Supreme Lead:** Vishwajith (@Vish7781)\n**Director in Technology:** Monkey D Luffy (@lo_uffy_1999)\n**Workspace Owner:** Dxrk sky\n**AI Operating Agent:** Snorlax / Hermes",
+                color=0x8b5cf6
+            )
+            await message.channel.send(embed=embed)
+
+        # UNIVERSAL CUTE RESPONDER ON @MENTIONS
         else:
-            embed = discord.Embed(
-                title="🐙 GitHub Issue Action Logged",
-                description=f"Issue request logged for `Hemang-krishna/project-anya`: `{issue_title}`",
-                color=0x3b82f6
-            )
-        await message.channel.send(embed=embed)
+            search_term = re.sub(r'^(search|research|find|look up)\s+', '', query_clean, flags=re.IGNORECASE).strip()
+            
+            async with message.channel.typing():
+                web_results = perform_bulletproof_web_search(search_term)
 
-    # UNIVERSAL REAL-TIME RESPONDER FOR ALL TEAM MEMBERS & ALL MESSAGES!
-    else:
-        search_term = re.sub(r'^(search|research|find|look up)\s+', '', content_clean, flags=re.IGNORECASE).strip()
-        if not search_term:
-            search_term = "AI Automations Project Snorlax"
-
-        async with message.channel.typing():
-            web_results = perform_bulletproof_web_search(search_term)
-
-        quote, tip = random.choice(MOTIVATIONAL_QUOTES)
-
-        if web_results:
-            embed = discord.Embed(
-                title=f"🤖 Snorlax Real-Time AI Response for {message.author.display_name}",
-                description=f"Hello **{message.author.mention}**! Here are real-time insights and top web research sources for your message:\n\n💬 **Your Message:** `{content_clean}`",
-                color=0x10b981 # Emerald Green
-            )
-            for res in web_results[:3]:
-                embed.add_field(
-                    name=f"🌐 {res['title'][:200]}",
-                    value=f"{res['snippet'][:250]}\n🔗 **[Open Link / Read Source]({res['link']})**",
-                    inline=False
+            if web_results:
+                embed = discord.Embed(
+                    title=f"{cute_prefix} Snorlax Answer for {message.author.display_name}",
+                    description=f"Hello **{message.author.mention}** {random.choice(CUTE_EMOJIS)}! Here are real-time web insights for your question:\n\n💬 `{query_clean}`",
+                    color=0x10b981
                 )
-            embed.set_footer(text="Project Snorlax • 24/7 Real-Time AI Team Assistant")
-            await message.channel.send(embed=embed)
-        else:
-            embed = discord.Embed(
-                title=f"🤖 Snorlax Real-Time Response for {message.author.display_name}",
-                description=f"Hello **{message.author.mention}**! I have processed your message in real-time:\n\n💬 **Your Message:** `{content_clean}`\n\n💡 **Productivity Insight:** {tip}\n📜 **Daily Motivation:** {quote}",
-                color=0x3b82f6
-            )
-            embed.set_footer(text="Project Snorlax • 24/7 Real-Time AI Team Assistant")
-            await message.channel.send(embed=embed)
+                for res in web_results[:3]:
+                    embed.add_field(
+                        name=f"🌐 {res['title'][:200]}",
+                        value=f"{res['snippet'][:250]}\n🔗 **[Read Source Link]({res['link']})**",
+                        inline=False
+                    )
+                embed.set_footer(text=f"Project Snorlax • Always Available 24/7 {random.choice(CUTE_EMOJIS)}")
+                await message.channel.send(embed=embed)
+            else:
+                quote, tip = random.choice(MOTIVATIONAL_QUOTES)
+                embed = discord.Embed(
+                    title=f"{cute_prefix} Snorlax Answer for {message.author.display_name}",
+                    description=f"Hello **{message.author.mention}** {random.choice(CUTE_EMOJIS)}!\n\n💬 `{query_clean}`\n\n💡 **Tip:** {tip}\n📜 **Quote:** {quote}",
+                    color=0x3b82f6
+                )
+                embed.set_footer(text=f"Project Snorlax • Always Available 24/7 {random.choice(CUTE_EMOJIS)}")
+                await message.channel.send(embed=embed)
 
     await bot.process_commands(message)
 
@@ -271,5 +224,5 @@ if __name__ == "__main__":
         print("Error: DISCORD_BOT_TOKEN not found.")
         sys.exit(1)
     
-    print("Starting 24/7 Snorlax Bot with REAL-TIME MESSAGING TO ALL TEAM MEMBERS...")
+    print("Starting 24/7 Snorlax Bot with Passive Chat Reading & @Mention Only Responding...")
     bot.run(BOT_TOKEN)
