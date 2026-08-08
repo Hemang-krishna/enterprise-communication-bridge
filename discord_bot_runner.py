@@ -38,7 +38,6 @@ bridge = EnterpriseCommunicationBridge()
 
 CUTE_EMOJIS = ["😴", "⚡", "🌸", "🎀", "🐣", "🔮", "☕", "🎨", "🌟", "✨", "🐾", "🐥"]
 
-# Warm natural greetings pool for simple team hellos
 GREETING_RESPONSES = [
     "Hii {user}! 🌸✨ Hope you're having an awesome and high-energy day on Project Snorlax! How can I help you or power your workflow right now? ☕⚡",
     "Hey {user}! 😴✨ Snorlax is here and active 24/7! What are we building or automating today? 🔮🎨",
@@ -49,12 +48,10 @@ GREETING_RESPONSES = [
 MOTIVATIONAL_QUOTES = [
     ("“Simplicity is prerequisite for reliability.” — Edsger W. Dijkstra", "Break complex automation nodes into small, focused sub-systems to eliminate mental clutter."),
     ("“The best way to predict the future is to invent it.” — Alan Kay", "Every AI flow you build today shapes the autonomous infrastructure of tomorrow."),
-    ("“Action is the foundational key to all success.” — Pablo Picasso", "Start with a working prototype, then iterate rapidly. Perfect execution beats overthinking."),
-    ("“It always seems impossible until it's done.” — Nelson Mandela", "Complex web scrapers and sub-second voice agents seem daunting until the first successful API call.")
+    ("“Action is the foundational key to all success.” — Pablo Picasso", "Start with a working prototype, then iterate rapidly. Perfect execution beats overthinking.")
 ]
 
 def perform_bulletproof_web_search(query: str, limit: int = 3) -> list:
-    """Extracts clean real-time search results (titles, snippets, direct URLs)."""
     encoded = urllib.parse.quote(query)
     url = "https://lite.duckduckgo.com/lite/"
     req = urllib.request.Request(
@@ -95,33 +92,7 @@ def perform_bulletproof_web_search(query: str, limit: int = 3) -> list:
 
     return results[:limit]
 
-def generate_intelligent_answer(query: str, search_results: list, user_name: str) -> str:
-    """
-    Generates a natural, intelligent human-like answer FIRST,
-    incorporating extracted web insights into direct prose.
-    """
-    q_lower = query.lower()
-
-    # Check for greeting intention
-    if any(kw in q_lower for kw in ["greet", "say hi", "welcome everyone", "hello everyone", "good morning", "good afternoon"]):
-        return (
-            f"Hey everyone in Project Snorlax! 🌸✨ Wishing a fantastic, high-productivity day to our Founder **Vishwajith** (@Vish7781), "
-            f"Tech Director **Monkey D Luffy** (@lo_uffy_1999), **Dxrk sky**, and the entire team! ☕⚡ "
-            f"Let's make incredible progress on our AI Automations today—Snorlax is here 24/7 to support and power all your work! 😴🔮"
-        )
-
-    # Synthesize answer from top web snippets if available
-    if search_results:
-        best = search_results[0]
-        answer_body = f"Here is the breakdown for **{user_name}**:\n\n{best['snippet']}\n\n"
-        if len(search_results) > 1:
-            answer_body += f"Additionally, key insights show that: {search_results[1]['snippet']}\n\n"
-        return answer_body
-    else:
-        return f"Hey {user_name}! 🌸 Regarding `{query}`, Snorlax processed your request for Project Snorlax AI Automations stack. I am active 24/7 to help you with web research, Notion task updates, and technical workflows! ⚡✨"
-
 def log_team_chat_message(author: str, content: str, channel: str):
-    """Passively logs every team message to track workflow state for Telegram reporting."""
     os.makedirs("/data/reports", exist_ok=True)
     entry = {
         "timestamp": datetime.utcnow().isoformat(),
@@ -140,54 +111,21 @@ def log_team_chat_message(author: str, content: str, channel: str):
     with open(CHAT_LOG_FILE, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2)
 
-def generate_telegram_workflow_report() -> str:
-    """Generates a detailed personal workflow report of team interactions for Dxrk sky on Telegram."""
-    if not os.path.exists(CHAT_LOG_FILE):
-        return "📊 **Personal Workflow Report for Dxrk sky:**\nNo team chat activity logged yet today."
-
-    try:
-        with open(CHAT_LOG_FILE, "r", encoding="utf-8") as f:
-            chats = json.load(f)
-    except Exception:
-        chats = []
-
-    total_msgs = len(chats)
-    authors = set(c["author"] for c in chats)
-
-    report = (
-        f"📊 **PERSONAL TELEGRAM WORKFLOW REPORT (Dxrk sky)** 📊\n"
-        f"• **Generated At:** {datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')}\n"
-        f"• **Total Messages Monitored:** {total_msgs}\n"
-        f"• **Active Team Members:** {', '.join(authors) if authors else 'None'}\n\n"
-        f"🔍 **Workflow State Analysis:**\n"
-    )
-    for c in chats[-10:]:
-        report += f"  • `[{c['author']}]`: {c['content'][:120]}\n"
-
-    report += f"\n⚡ **System Status:** Snorlax 24/7 Autonomous Daemon Active & Self-Healing."
-    
-    with open(TELEGRAM_REPORT_FILE, "w", encoding="utf-8") as f:
-        f.write(report)
-
-    return report
-
 @bot.event
 async def on_ready():
     logging.info(f"⚡ [Snorlax Bot Online] Authenticated as {bot.user} (ID: {bot.user.id})")
-    print(f"✅ Snorlax Autonomous Bot Online 24/7! Natural Conversational Responder Active.")
-    await bot.change_presence(activity=discord.Game(name="24/7 Conversational AI & Web Research"))
+    print(f"✅ Snorlax Autonomous Bot Online 24/7! Visual n8n Flow Architect Active.")
+    await bot.change_presence(activity=discord.Game(name="24/7 Visual n8n AI Flow Architect"))
 
 @bot.event
 async def on_message(message):
     if message.author == bot.user:
         return
 
-    # Passively log all team messages
     content_raw = message.content.strip()
     if content_raw:
         log_team_chat_message(author=message.author, content=content_raw, channel=str(message.channel))
 
-    # Respond ONLY when explicitly @mentioned or prefixed
     is_mentioned = bot.user.mentioned_in(message)
     is_prefixed = message.content.startswith("!snorlax") or message.content.startswith("!anya") or message.content.startswith("!hermes")
 
@@ -199,8 +137,8 @@ async def on_message(message):
         query_clean = content_clean.strip()
         user_display = message.author.display_name
 
-        # Case 1: Simple Greetings (e.g. "hii", "hello", "hey", "sup", "good morning")
-        if query_clean.lower() in ["hii", "hi", "hello", "hey", "sup", "yo", "good morning", "good afternoon"]:
+        # Case 1: Simple Greetings
+        if query_clean.lower() in ["hii", "hi", "hello", "hey", "sup", "yo"]:
             greeting_msg = random.choice(GREETING_RESPONSES).format(user=message.author.mention)
             await message.channel.send(greeting_msg)
             return
@@ -209,27 +147,49 @@ async def on_message(message):
         elif query_clean.lower() == "status":
             embed = discord.Embed(
                 title=f"{random.choice(CUTE_EMOJIS)} Snorlax System Status",
-                description="**Status:** 100% Operational (24/7)\n**Natural Conversational Engine:** ACTIVE\n**Answer-First + Sources Flow:** ENABLED\n**Telegram Personal Report:** ENABLED",
+                description="**Status:** 100% Operational (24/7)\n**n8n AI Flow Architect:** ACTIVE\n**Starter Kit Repo:** Synced (*Hemang-krishna/self-hosted-ai-starter-kit*)",
                 color=0x2563eb
             )
             await message.channel.send(embed=embed)
             return
 
-        # Case 3: Questions / Requests / Searches (ANSWER FIRST, REFERENCE WEBPAGES LATER)
+        # Case 3: Questions & AI Automations (DEFINITION FIRST + VISUAL n8n FLOW ARCHITECT + SOURCES LATER)
         else:
             async with message.channel.typing():
                 web_results = perform_bulletproof_web_search(query_clean, limit=3)
-                answer_text = generate_intelligent_answer(query_clean, web_results, user_display)
 
-            # Build Natural Human-Like Embed Response
             cute_icon = random.choice(CUTE_EMOJIS)
+            
+            # DEFINITION & EXPLANATION FIRST
+            definition_text = (
+                f"An **AI Automation** is an autonomous digital pipeline that combines **Large Language Models (LLMs)** with deterministic workflow nodes (n8n, webhooks, databases, and APIs).\n\n"
+                f"Unlike static rule-based scripts, AI Automations read unstructured data, reason through complex decisions, query vector databases (Qdrant RAG), and execute actions (voice calls, emails, git commits) automatically without human intervention."
+            )
+
+            # VISUAL n8n FLOW ARCHITECT DIAGRAM
+            visual_flow_diagram = (
+                "```text\n"
+                "[ Node 1: Webhook / Scraper Trigger ] ⚡\n"
+                "       │  Receives Inbound Event / Lead Scraper Data\n"
+                "       ▼\n"
+                "[ Node 2: Gemini 2.0 / Ollama AI Agent ] 🧠\n"
+                "       │  Reasons over Task Prompt & Qualifies Eligibility\n"
+                "       ▼\n"
+                "[ Node 3: Qdrant Vector RAG Store ] 🔮\n"
+                "       │  Queries Knowledge Context & Historical Guidelines\n"
+                "       ▼\n"
+                "[ Node 4: Sub-Second Voice AI & Discord Alert Node ] 🛸\n"
+                "       └─ Dials Phone Call (~380ms) & Dispatches Discord Embed!\n"
+                "```"
+            )
+
             embed = discord.Embed(
-                title=f"{cute_icon} {user_display}'s Query Answer",
-                description=f"Hey **{message.author.mention}** {cute_icon}!\n\n{answer_text}",
+                title=f"{cute_icon} {user_display}'s AI Automation & Visual Flow Architect Answer",
+                description=f"Hey **{message.author.mention}** {cute_icon}!\n\n### 🧠 What is an AI Automation?\n{definition_text}\n\n### 🔌 Visual n8n Flow Architect Diagram\n{visual_flow_diagram}\n👉 **[Open Interactive n8n Canvas Web App](https://anya-agentic-space.loca.lt/static/n8n_ai_flow_architect.html)**",
                 color=0x10b981
             )
 
-            # APPEND SUPPORTED REFERENCE WEBPAGES LATER AT THE BOTTOM
+            # SUPPORTED REFERENCE WEBPAGES LATER AT THE BOTTOM
             if web_results:
                 sources_text = ""
                 for idx, res in enumerate(web_results, 1):
@@ -241,7 +201,7 @@ async def on_message(message):
                     inline=False
                 )
 
-            embed.set_footer(text=f"Project Snorlax • Always Here 24/7 {random.choice(CUTE_EMOJIS)}")
+            embed.set_footer(text=f"Project Snorlax • n8n Flow Architect Active 24/7 {random.choice(CUTE_EMOJIS)}")
             await message.channel.send(embed=embed)
 
     await bot.process_commands(message)
@@ -251,5 +211,5 @@ if __name__ == "__main__":
         print("Error: DISCORD_BOT_TOKEN not found.")
         sys.exit(1)
     
-    print("Starting 24/7 Snorlax Bot with Answer-First + Supporting Webpages Engine...")
+    print("Starting 24/7 Snorlax Bot with Visual n8n Flow Architect & AI Automation Definition Engine...")
     bot.run(BOT_TOKEN)
