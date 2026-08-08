@@ -27,6 +27,15 @@
       "name": "Devin Digital Worker",
       "role": "Autonomous Software Engineer",
       "status": "ACTIVE"
+    },
+    {
+      "id": "team_20260808_111946",
+      "name": "Monkey D Luffy",
+      "role": "Director in Technology",
+      "email": "krishnachatanyalagadapatihema@gmail.com",
+      "discord_id": "lo_uffy_1999",
+      "status": "ACTIVE",
+      "joined_at": "2026-08-08T11:19:46.346904"
     }
   ]
 }

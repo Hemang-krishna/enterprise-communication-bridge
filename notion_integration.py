@@ -184,11 +184,19 @@ class NotionEnterpriseEngine:
             "role": role,
             "email": email,
             "discord_id": discord_id or "",
+            "status": "ACTIVE",
             "joined_at": datetime.now().isoformat()
         }
         with open(self.team_file, "r", encoding="utf-8") as f:
             data = json.load(f)
-        data["items"].append(member)
+        
+        if "members" in data:
+            data["members"].append(member)
+        elif "items" in data:
+            data["items"].append(member)
+        else:
+            data["members"] = [member]
+
         with open(self.team_file, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2)
         return {"success": True, "team_member": member}
