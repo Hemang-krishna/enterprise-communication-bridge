@@ -36,6 +36,15 @@
       "discord_id": "lo_uffy_1999",
       "status": "ACTIVE",
       "joined_at": "2026-08-08T11:19:46.346904"
+    },
+    {
+      "id": "team_20260808_115937",
+      "name": "Vishwajith",
+      "role": "Founder",
+      "email": "chvishwajith.pandu@gmail.com",
+      "discord_id": "Vish7781",
+      "status": "ACTIVE",
+      "joined_at": "2026-08-08T11:59:37.045538"
     }
   ]
 }
