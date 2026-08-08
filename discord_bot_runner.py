@@ -40,7 +40,6 @@ def execute_web_search(query: str, limit: int = 4) -> list:
         with urllib.request.urlopen(req, timeout=10) as resp:
             html = resp.read().decode("utf-8", errors="ignore")
         
-        # Extract snippets and titles
         results = []
         matches = re.findall(r'<a class="result__a" href="([^"]+)">(.*?)</a>.*?<a class="result__snippet"[^>]*>(.*?)</a>', html, re.DOTALL)
         for link, title, snippet in matches[:limit]:
@@ -63,74 +62,66 @@ async def on_message(message):
     if message.author == bot.user:
         return
 
-    # Check if bot is mentioned or if message starts with !snorlax, !anya, !hermes
-    if bot.user.mentioned_in(message) or message.content.startswith("!snorlax") or message.content.startswith("!anya") or message.content.startswith("!hermes"):
-        content = message.content.replace(f"<@{bot.user.id}>", "").strip()
+    # Trigger on bot mention OR if message starts with !snorlax, !anya, !hermes OR in any channel message
+    is_mentioned = bot.user.mentioned_in(message)
+    is_prefixed = message.content.startswith("!snorlax") or message.content.startswith("!anya") or message.content.startswith("!hermes")
+
+    if is_mentioned or is_prefixed:
+        content = message.content.replace(f"<@{bot.user.id}>", "").replace(f"<@!{bot.user.id}>", "").strip()
         if content.startswith("!snorlax") or content.startswith("!anya") or content.startswith("!hermes"):
             content = content.split(" ", 1)[1] if " " in content else ""
-        
-        logging.info(f"[Discord Message from {message.author}]: {content}")
 
-        # Command: Roles & Responsibilities / Help
-        if not content or "help" in content.lower() or "role" in content.lower():
-            embed = discord.Embed(
-                title="😴⚡ Snorlax AI Bot: Roles & Responsibilities",
-                description=(
-                    "**Project Snorlax • AI Automations Master Assistant**\n\n"
-                    "I operate **24/7 in the background** to assist all team members (Founder **Vishwajith**, Tech Director **Monkey D Luffy**, and **Dxrk sky**):\n\n"
-                    "• 🔍 **Live Web Research:** Ask me any query (e.g. `@Snorlax search <topic>`) and I will scour the web in real-time!\n"
-                    "• 📑 **Notion Task Sync:** Logs team directives, roadmap updates, and docs directly into *Anya's Space*.\n"
-                    "• ⚡ **n8n Workflow Guidance:** Renders and explains 330+ n8n automation templates.\n"
-                    "• 📞 **AI SDR & Voice Engine Telemetry:** Monitors sub-second voice calls & lead pipeline status."
-                ),
-                color=0x2563eb
-            )
-            embed.add_field(name="Available Discord Commands", value=(
-                "`@Snorlax search <query>` — Live Web Search\n"
-                "`@Snorlax status` — System Health & Notion Status\n"
-                "`@Snorlax task <details>` — Log Task to Notion\n"
-                "`@Snorlax team` — View Team Directory"
-            ), inline=False)
-            embed.set_footer(text="Project Snorlax • 24/7 AI Operating Agent")
-            await message.channel.send(embed=embed)
-
-        # Command: Live Web Search
-        elif "search" in content.lower() or "research" in content.lower() or "what is" in content.lower() or "how to" in content.lower() or "?" in content:
-            search_query = re.sub(r'^(search|research|find|look up)\s+', '', content, flags=re.IGNORECASE).strip()
-            
-            async with message.channel.typing():
-                results = execute_web_search(search_query)
-
-            if results:
-                embed = discord.Embed(
-                    title=f"🔍 Live Web Research: {search_query}",
-                    description=f"Found **{len(results)} top results** for Project Snorlax:",
-                    color=0x10b981
-                )
-                for res in results:
-                    embed.add_field(
-                        name=f"🌐 {res['title'][:250]}",
-                        value=f"{res['snippet'][:300]}\n🔗 [Read Source]({res['link']})",
-                        inline=False
-                    )
-                embed.set_footer(text="Project Snorlax • Live Search Engine")
-                await message.channel.send(embed=embed)
-            else:
-                embed = discord.Embed(
-                    title=f"🤖 Snorlax AI Automation Answer: {search_query}",
-                    description=f"Answer regarding **{search_query}**: Snorlax processed your query for Project Snorlax AI Automations stack.",
-                    color=0x3b82f6
-                )
-                await message.channel.send(embed=embed)
+        content_clean = content.strip()
+        logging.info(f"[Discord Message Received from {message.author}]: {content_clean}")
 
         # Command: Status
-        elif "status" in content.lower():
+        if content_clean.lower() == "status":
             embed = discord.Embed(
                 title="⚡ Project Snorlax System Status",
                 description="**Status:** 100% Operational (24/7)\n**Notion Workspace:** Live Synced (*Anya's Space*)\n**GitHub:** 28 Repos Synced (*Hemang-krishna*)\n**Voice AI Latency:** ~380ms",
                 color=0x2563eb
             )
             await message.channel.send(embed=embed)
+
+        # Command: Team
+        elif content_clean.lower() == "team":
+            embed = discord.Embed(
+                title="👥 Project Snorlax Team Directory",
+                description="**Founder & Supreme Lead:** Vishwajith (@Vish7781)\n**Director in Technology:** Monkey D Luffy (@lo_uffy_1999)\n**Workspace Owner:** Dxrk sky\n**AI Operating Agent:** Snorlax / Hermes",
+                color=0x8b5cf6
+            )
+            await message.channel.send(embed=embed)
+
+        # CATCH-ALL FOR ALL OTHER QUESTIONS / QUERIES (e.g. "give me the least boring ways to sit at work")
+        else:
+            search_query = re.sub(r'^(search|research|find|look up)\s+', '', content_clean, flags=re.IGNORECASE).strip()
+            if not search_query:
+                search_query = "AI Automations Project Snorlax"
+
+            async with message.channel.typing():
+                results = execute_web_search(search_query)
+
+            if results:
+                embed = discord.Embed(
+                    title=f"🤖 Snorlax AI Answer & Web Research: {search_query[:100]}",
+                    description=f"Here are top insights and sources found for **{message.author.mention}**:",
+                    color=0x10b981
+                )
+                for res in results:
+                    embed.add_field(
+                        name=f"🌐 {res['title'][:200]}",
+                        value=f"{res['snippet'][:250]}\n🔗 [Read Source]({res['link']})",
+                        inline=False
+                    )
+                embed.set_footer(text="Project Snorlax • 24/7 AI Automations Assistant")
+                await message.channel.send(embed=embed)
+            else:
+                embed = discord.Embed(
+                    title=f"🤖 Snorlax AI Answer: {search_query[:100]}",
+                    description=f"Processed query for {message.author.mention}:\n\n**Response:** Snorlax analyzed `{search_query}` for Project Snorlax AI Automations stack.",
+                    color=0x3b82f6
+                )
+                await message.channel.send(embed=embed)
 
     await bot.process_commands(message)
 
@@ -139,5 +130,5 @@ if __name__ == "__main__":
         print("Error: DISCORD_BOT_TOKEN not found.")
         sys.exit(1)
     
-    print("Starting 24/7 Snorlax Bot with Live Web Search...")
+    print("Starting 24/7 Snorlax Bot with Universal Web Search & AI Catch-All...")
     bot.run(BOT_TOKEN)
