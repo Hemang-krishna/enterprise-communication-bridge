@@ -16,6 +16,7 @@ sys.path.append("/data")
 import discord
 from discord.ext import commands, tasks
 from integrations.enterprise_bridge import EnterpriseCommunicationBridge
+from integrations.snorlax_memory_engine import SnorlaxMemoryEngine
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - [%(levelname)s] - %(message)s")
 
@@ -35,13 +36,14 @@ if not BOT_TOKEN and os.path.exists("/data/.env"):
 intents = discord.Intents.default()
 bot = commands.Bot(command_prefix="!", intents=intents)
 bridge = EnterpriseCommunicationBridge()
+snorlax_mem = SnorlaxMemoryEngine()
 
 CUTE_EMOJIS = ["😴", "⚡", "🌸", "🎀", "🐣", "🔮", "☕", "🎨", "🌟", "✨", "🐾", "🐥"]
 
 GREETING_RESPONSES = [
     "Hii {user}! 🌸✨ Hope you're having an awesome and high-energy day on Project Snorlax! How can I help you or power your workflow right now? ☕⚡",
-    "Hey {user}! 😴✨ Snorlax is here and active 24/7! What are we building or automating today? 🔮🎨",
-    "Hello {user}! 🐣🎀 Great to see you in the chat! Let me know if you need any web research, Notion task updates, or code help! ⚡✨"
+    "Hey {user}! 😴✨ Snorlax is here and active 24/7 with persistent memory! What are we building or automating today? 🔮🎨",
+    "Hello {user}! 🐣🎀 Great to see you in the chat! Let me know if you need any web research, Notion task updates, or memory recalls! ⚡✨"
 ]
 
 def perform_bulletproof_web_search(query: str, limit: int = 4) -> list:
@@ -108,8 +110,8 @@ def log_team_chat_message(author: str, content: str, channel: str):
 @bot.event
 async def on_ready():
     logging.info(f"⚡ [Snorlax Bot Online] Authenticated as {bot.user} (ID: {bot.user.id})")
-    print(f"✅ Snorlax Autonomous Bot Online 24/7! Dynamic Query Router & Live Search Engine Active.")
-    await bot.change_presence(activity=discord.Game(name="24/7 Dynamic Web Research & Team Support"))
+    print(f"✅ Snorlax Autonomous Bot Online 24/7! Persistent Memory Engine Active.")
+    await bot.change_presence(activity=discord.Game(name="24/7 Persistent Memory & Live Search"))
 
 @bot.event
 async def on_message(message):
@@ -132,33 +134,46 @@ async def on_message(message):
         user_display = message.author.display_name
         cute_icon = random.choice(CUTE_EMOJIS)
 
-        # Case 1: Simple Greetings
-        if query_clean.lower() in ["hii", "hi", "hello", "hey", "sup", "yo"]:
-            greeting_msg = random.choice(GREETING_RESPONSES).format(user=message.author.mention)
-            await message.channel.send(greeting_msg)
-            return
-
-        # Case 2: Status Command
-        elif query_clean.lower() == "status":
+        # Command: Save Fact to Snorlax Persistent Memory
+        if query_clean.lower().startswith("remember") or "save memory" in query_clean.lower():
+            fact_to_save = re.sub(r'^(remember|save memory|remember that)\s+', '', query_clean, flags=re.IGNORECASE).strip()
+            snorlax_mem.add_fact(f"Directive from {user_display}: {fact_to_save}")
             embed = discord.Embed(
-                title=f"{cute_icon} Snorlax System Status",
-                description="**Status:** 100% Operational (24/7)\n**Dynamic Query Router:** ACTIVE (Matches exact query)\n**Live Web Search:** Bulletproof BeautifulSoup DDG Engine Active",
-                color=0x2563eb
-            )
-            await message.channel.send(embed=embed)
-            return
-
-        # Case 3: Personal UI Request
-        elif query_clean.lower() in ["ui", "app", "interface", "portal"]:
-            embed = discord.Embed(
-                title=f"🌸✨ Snorlax Personal AI Operating Interface",
-                description=f"Hii **{message.author.mention}** ☕!\n\n👉 **[Launch Personal Snorlax AI User Interface](https://anya-agentic-space.loca.lt/static/snorlax_personal_ui.html)**",
+                title=f"🧠 Snorlax Persistent Memory Saved",
+                description=f"Hii **{message.author.mention}** {cute_icon}! I have saved this fact to my persistent memory vault (`/data/snorlax_memory.json`):\n\n📌 **Saved Memory:** `{fact_to_save}`",
                 color=0x8b5cf6
             )
             await message.channel.send(embed=embed)
             return
 
-        # Case 4: DYNAMIC SEARCH & ANSWER ENGINE (MATCHES EXACT USER QUERY)
+        # Command: Memory Inspection
+        elif query_clean.lower() in ["memory", "show memory", "facts"]:
+            mem_text = snorlax_mem.get_memory_context()
+            embed = discord.Embed(
+                title=f"🧠 Snorlax Persistent Memory Vault",
+                description=f"Here are my current persistent facts and project rules:\n\n{mem_text}",
+                color=0x8b5cf6
+            )
+            await message.channel.send(embed=embed)
+            return
+
+        # Command: Simple Greetings
+        elif query_clean.lower() in ["hii", "hi", "hello", "hey", "sup", "yo"]:
+            greeting_msg = random.choice(GREETING_RESPONSES).format(user=message.author.mention)
+            await message.channel.send(greeting_msg)
+            return
+
+        # Command: Status
+        elif query_clean.lower() == "status":
+            embed = discord.Embed(
+                title=f"{cute_icon} Snorlax System Status",
+                description="**Status:** 100% Operational (24/7)\n**Persistent Memory Engine:** ACTIVE (`snorlax_memory.json`)\n**Live Web Search:** Bulletproof BeautifulSoup Engine Active",
+                color=0x2563eb
+            )
+            await message.channel.send(embed=embed)
+            return
+
+        # DYNAMIC SEARCH & ANSWER ENGINE WITH PERSISTENT MEMORY & EXACT RESULTS
         else:
             search_term = re.sub(r'^(tell me|search|research|find|look up|what is|how to)\s+', '', query_clean, flags=re.IGNORECASE).strip()
             if not search_term:
@@ -167,7 +182,6 @@ async def on_message(message):
             async with message.channel.typing():
                 web_results = perform_bulletproof_web_search(search_term, limit=4)
 
-            # Check if user specifically asked about AI Automation or n8n
             is_ai_automation_query = any(kw in query_clean.lower() for kw in ["ai automation", "n8n", "flow architect", "workflow diagram"])
 
             if is_ai_automation_query:
@@ -185,11 +199,10 @@ async def on_message(message):
                     color=0x10b981
                 )
             else:
-                # DYNAMIC REAL-TIME ANSWER FOR ALL OTHER SUBJECTS (e.g. Gold Price, Stock Market, News, Tech)
                 embed = discord.Embed(
-                    title=f"📈 {user_display}'s Research Answer: {search_term[:80]}",
+                    title=f"🔍 {user_display}'s Research Answer: {search_term[:80]}",
                     description=f"Hello **{message.author.mention}** {cute_icon}! Here are the real-time live web search findings for your request:\n\n💬 **Query:** `{query_clean}`",
-                    color=0x10b981 # Emerald Green
+                    color=0x10b981
                 )
 
             # APPEND EXTRACTED WEB RESULTS & CLICKABLE DIRECT LINKS
@@ -199,12 +212,12 @@ async def on_message(message):
                     sources_text += f"**{idx}. {res['title'][:100]}**\n{res['snippet'][:250]}\n🔗 **[Open Source Link]({res['link']})**\n\n"
                 
                 embed.add_field(
-                    name="🌐 Live Web Search Findings & Supporting Sources",
+                    name="🌐 Live Web Search Findings & Exact Sources",
                     value=sources_text[:1000],
                     inline=False
                 )
 
-            embed.set_footer(text=f"Project Snorlax • Dynamic Live Search Active 24/7 {cute_icon}")
+            embed.set_footer(text=f"Project Snorlax • Persistent Memory & Search Active 24/7 {cute_icon}")
             await message.channel.send(embed=embed)
 
     await bot.process_commands(message)
@@ -214,5 +227,5 @@ if __name__ == "__main__":
         print("Error: DISCORD_BOT_TOKEN not found.")
         sys.exit(1)
     
-    print("Starting 24/7 Snorlax Bot with Dynamic Search Router & Live Gold/Market Data Engine...")
+    print("Starting 24/7 Snorlax Bot with Persistent Memory Engine & Live Search...")
     bot.run(BOT_TOKEN)
