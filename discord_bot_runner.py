@@ -41,17 +41,11 @@ CUTE_EMOJIS = ["😴", "⚡", "🌸", "🎀", "🐣", "🔮", "☕", "🎨", "�
 GREETING_RESPONSES = [
     "Hii {user}! 🌸✨ Hope you're having an awesome and high-energy day on Project Snorlax! How can I help you or power your workflow right now? ☕⚡",
     "Hey {user}! 😴✨ Snorlax is here and active 24/7! What are we building or automating today? 🔮🎨",
-    "Hello {user}! 🐣🎀 Great to see you in the chat! Let me know if you need any web research, Notion task updates, or code help! ⚡✨",
-    "Hii there {user}! 🌸🐾 Ready to smash our AI Automation goals today! How can I assist you right now? 🌟☕"
+    "Hello {user}! 🐣🎀 Great to see you in the chat! Let me know if you need any web research, Notion task updates, or code help! ⚡✨"
 ]
 
-MOTIVATIONAL_QUOTES = [
-    ("“Simplicity is prerequisite for reliability.” — Edsger W. Dijkstra", "Break complex automation nodes into small, focused sub-systems to eliminate mental clutter."),
-    ("“The best way to predict the future is to invent it.” — Alan Kay", "Every AI flow you build today shapes the autonomous infrastructure of tomorrow."),
-    ("“Action is the foundational key to all success.” — Pablo Picasso", "Start with a working prototype, then iterate rapidly. Perfect execution beats overthinking.")
-]
-
-def perform_bulletproof_web_search(query: str, limit: int = 3) -> list:
+def perform_bulletproof_web_search(query: str, limit: int = 4) -> list:
+    """Extracts real-time web search results (titles, snippets, and clean clickable links)."""
     encoded = urllib.parse.quote(query)
     url = "https://lite.duckduckgo.com/lite/"
     req = urllib.request.Request(
@@ -114,8 +108,8 @@ def log_team_chat_message(author: str, content: str, channel: str):
 @bot.event
 async def on_ready():
     logging.info(f"⚡ [Snorlax Bot Online] Authenticated as {bot.user} (ID: {bot.user.id})")
-    print(f"✅ Snorlax Autonomous Bot Online 24/7! Personal Agentic UI & 5-Year-Old Explanation Engine Active.")
-    await bot.change_presence(activity=discord.Game(name="24/7 Personal Snorlax AI UI & Web Search"))
+    print(f"✅ Snorlax Autonomous Bot Online 24/7! Dynamic Query Router & Live Search Engine Active.")
+    await bot.change_presence(activity=discord.Game(name="24/7 Dynamic Web Research & Team Support"))
 
 @bot.event
 async def on_message(message):
@@ -136,6 +130,7 @@ async def on_message(message):
 
         query_clean = content_clean.strip()
         user_display = message.author.display_name
+        cute_icon = random.choice(CUTE_EMOJIS)
 
         # Case 1: Simple Greetings
         if query_clean.lower() in ["hii", "hi", "hello", "hey", "sup", "yo"]:
@@ -143,80 +138,73 @@ async def on_message(message):
             await message.channel.send(greeting_msg)
             return
 
-        # Case 2: Personal UI / App Link Request
-        elif query_clean.lower() in ["ui", "app", "interface", "portal", "website"]:
+        # Case 2: Status Command
+        elif query_clean.lower() == "status":
+            embed = discord.Embed(
+                title=f"{cute_icon} Snorlax System Status",
+                description="**Status:** 100% Operational (24/7)\n**Dynamic Query Router:** ACTIVE (Matches exact query)\n**Live Web Search:** Bulletproof BeautifulSoup DDG Engine Active",
+                color=0x2563eb
+            )
+            await message.channel.send(embed=embed)
+            return
+
+        # Case 3: Personal UI Request
+        elif query_clean.lower() in ["ui", "app", "interface", "portal"]:
             embed = discord.Embed(
                 title=f"🌸✨ Snorlax Personal AI Operating Interface",
-                description=(
-                    f"Hii **{message.author.mention}** ☕!\n\n"
-                    f"Here is your **Personal Snorlax Agentic User Interface** created from scratch:\n\n"
-                    f"👉 **[Launch Snorlax Personal AI Interface](https://anya-agentic-space.loca.lt/static/snorlax_personal_ui.html)**\n\n"
-                    f"✨ **Features Inside:**\n"
-                    f"• Live Interactive Chat Console\n"
-                    f"• Visual n8n AI Flow Architect Canvas\n"
-                    f"• Super-Easy 5-Year-Old Explanation Center\n"
-                    f"• Real-Time Team Leadership Directory"
-                ),
+                description=f"Hii **{message.author.mention}** ☕!\n\n👉 **[Launch Personal Snorlax AI User Interface](https://anya-agentic-space.loca.lt/static/snorlax_personal_ui.html)**",
                 color=0x8b5cf6
             )
             await message.channel.send(embed=embed)
             return
 
-        # Case 3: Questions & AI Automations (PATIENT 5-YEAR-OLD EXPLANATION FIRST + VISUAL n8n FLOW + UI LINK + SOURCES LATER)
+        # Case 4: DYNAMIC SEARCH & ANSWER ENGINE (MATCHES EXACT USER QUERY)
         else:
+            search_term = re.sub(r'^(tell me|search|research|find|look up|what is|how to)\s+', '', query_clean, flags=re.IGNORECASE).strip()
+            if not search_term:
+                search_term = query_clean
+
             async with message.channel.typing():
-                web_results = perform_bulletproof_web_search(query_clean, limit=3)
+                web_results = perform_bulletproof_web_search(search_term, limit=4)
 
-            cute_icon = random.choice(CUTE_EMOJIS)
-            
-            # PATIENT 5-YEAR-OLD EXPLANATION FIRST
-            easy_definition = (
-                f"🌸 **Imagine a Magical Robot Helper!**\n"
-                f"Normally, when you want to look something up, write an email, or make a phone call, you have to do every single button click yourself.\n\n"
-                f"An **AI Automation** is like giving your magical helper (Snorlax 😴) a list of recipes. Snorlax reads the request, thinks using its AI brain 🧠, looks up reference books 📚, and does all the work for you automatically in seconds!"
-            )
+            # Check if user specifically asked about AI Automation or n8n
+            is_ai_automation_query = any(kw in query_clean.lower() for kw in ["ai automation", "n8n", "flow architect", "workflow diagram"])
 
-            # VISUAL n8n FLOW ARCHITECT DIAGRAM
-            visual_flow_diagram = (
-                "```text\n"
-                "[ Node 1: Webhook / Scraper Trigger ] ⚡\n"
-                "       │  Receives Inbound Event / Lead Scraper Data\n"
-                "       ▼\n"
-                "[ Node 2: Gemini 2.0 / Ollama AI Agent ] 🧠\n"
-                "       │  Reasons over Task Prompt & Qualifies Eligibility\n"
-                "       ▼\n"
-                "[ Node 3: Qdrant Vector RAG Store ] 🔮\n"
-                "       │  Queries Knowledge Context & Historical Guidelines\n"
-                "       ▼\n"
-                "[ Node 4: Sub-Second Voice AI & Discord Alert Node ] 🛸\n"
-                "       └─ Dials Phone Call (~380ms) & Dispatches Discord Embed!\n"
-                "```"
-            )
+            if is_ai_automation_query:
+                easy_definition = (
+                    "An **AI Automation** is an autonomous digital pipeline that combines Large Language Models (LLMs) with deterministic workflow nodes (n8n, webhooks, databases, and APIs) to read unstructured data and execute tasks automatically."
+                )
+                visual_flow_diagram = (
+                    "```text\n"
+                    "[ Node 1: Webhook Trigger ] ⚡ ➔ [ Node 2: Gemini / Ollama LLM ] 🧠 ➔ [ Node 3: Qdrant Vector RAG ] 🔮 ➔ [ Node 4: Discord Alert ] 🛸\n"
+                    "```"
+                )
+                embed = discord.Embed(
+                    title=f"{cute_icon} {user_display}'s AI Automation Query Answer",
+                    description=f"Hey **{message.author.mention}** {cute_icon}!\n\n### 🧠 What is an AI Automation?\n{easy_definition}\n\n### 🔌 Visual n8n Flow Architect Diagram\n{visual_flow_diagram}\n👉 **[Launch Personal Snorlax AI User Interface](https://anya-agentic-space.loca.lt/static/snorlax_personal_ui.html)**",
+                    color=0x10b981
+                )
+            else:
+                # DYNAMIC REAL-TIME ANSWER FOR ALL OTHER SUBJECTS (e.g. Gold Price, Stock Market, News, Tech)
+                embed = discord.Embed(
+                    title=f"📈 {user_display}'s Research Answer: {search_term[:80]}",
+                    description=f"Hello **{message.author.mention}** {cute_icon}! Here are the real-time live web search findings for your request:\n\n💬 **Query:** `{query_clean}`",
+                    color=0x10b981 # Emerald Green
+                )
 
-            embed = discord.Embed(
-                title=f"{cute_icon} {user_display}'s AI Automation Explanation & Visual Flow",
-                description=(
-                    f"Hey **{message.author.mention}** {cute_icon}!\n\n"
-                    f"### 🧠 What is an AI Automation? (Super Easy Explanation)\n{easy_definition}\n\n"
-                    f"### 🔌 Visual n8n Flow Architect Diagram\n{visual_flow_diagram}\n"
-                    f"👉 **[Launch Personal Snorlax AI User Interface](https://anya-agentic-space.loca.lt/static/snorlax_personal_ui.html)**"
-                ),
-                color=0x10b981
-            )
-
-            # SUPPORTED REFERENCE WEBPAGES LATER AT THE BOTTOM
+            # APPEND EXTRACTED WEB RESULTS & CLICKABLE DIRECT LINKS
             if web_results:
                 sources_text = ""
                 for idx, res in enumerate(web_results, 1):
-                    sources_text += f"{idx}. **[{res['title'][:80]}]({res['link']})**\n_{res['snippet'][:120]}_\n\n"
+                    sources_text += f"**{idx}. {res['title'][:100]}**\n{res['snippet'][:250]}\n🔗 **[Open Source Link]({res['link']})**\n\n"
                 
                 embed.add_field(
-                    name="🔗 Supporting Web References & Sources",
+                    name="🌐 Live Web Search Findings & Supporting Sources",
                     value=sources_text[:1000],
                     inline=False
                 )
 
-            embed.set_footer(text=f"Project Snorlax • Personal AI Interface Active 24/7 {random.choice(CUTE_EMOJIS)}")
+            embed.set_footer(text=f"Project Snorlax • Dynamic Live Search Active 24/7 {cute_icon}")
             await message.channel.send(embed=embed)
 
     await bot.process_commands(message)
@@ -226,5 +214,5 @@ if __name__ == "__main__":
         print("Error: DISCORD_BOT_TOKEN not found.")
         sys.exit(1)
     
-    print("Starting 24/7 Snorlax Bot with Personal AI Interface & Patient 5-Year-Old Explanation Engine...")
+    print("Starting 24/7 Snorlax Bot with Dynamic Search Router & Live Gold/Market Data Engine...")
     bot.run(BOT_TOKEN)
