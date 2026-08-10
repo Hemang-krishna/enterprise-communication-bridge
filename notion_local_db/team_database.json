@@ -45,6 +45,15 @@
       "discord_id": "Vish7781",
       "status": "ACTIVE",
       "joined_at": "2026-08-08T11:59:37.045538"
+    },
+    {
+      "id": "team_20260810_190035",
+      "name": "Venky",
+      "role": "Director of Human Resources and Corporate Communications",
+      "email": "Gemini.venkat666@gmail.com",
+      "discord_id": "Dragoz666",
+      "status": "ACTIVE",
+      "joined_at": "2026-08-10T19:00:35.561890"
     }
   ]
 }
